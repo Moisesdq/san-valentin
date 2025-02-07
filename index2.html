@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6f7;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contenedor {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .botones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative; /* Para posicionar el botón NO */
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #siBtn {
+            background-color: #4caf50;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        #siBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #noBtn:hover {
+            transform: scale(1.1);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mensaje-final {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .mensaje-final h1 {
+            color: #e91e63;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        /* Media query para pantallas más pequeñas */
+        @media (max-width: 600px) {
+            .contenedor {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .mensaje-final h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>¿Queres ser mi San Valentin?</h1>
+        <img src="images.png" alt="Imagen de amor">
+        <p>Por su seguridad presione el boton verde.</p>
+        <div class="botones">
+            <button id="siBtn">¡Sí!</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="mensaje-final" id="mensajeFinal">
+        <h1>Sabía que dirías que sí!!!!!!! ❤️</h1>
+        <img src="Hugging Hug GIF.gif" alt="Celebración">
+        
+    </div>
+
+    <script>
+        const siBtn = document.getElementById('siBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mensajeFinal = document.getElementById('mensajeFinal');
+        const contenedor = document.querySelector('.contenedor');
+        let sizeMultiplierSi = 1;
+        let sizeMultiplierNo = 1;
+
+        reposicionarBotonNo();
+
+        noBtn.addEventListener('click', function() {
+
+            sizeMultiplierSi *= 3.2;
+            const newSizeSi = 16 * sizeMultiplierSi;
+            siBtn.style.fontSize = newSizeSi + 'px';
+            siBtn.style.padding = (15 * sizeMultiplierSi / 4) + 'px ' + (30 * sizeMultiplierSi / 4) + 'px';
+
+            // Reduce el tamaño del botón "No"
+            sizeMultiplierNo *= 0.7;
+            const newSizeNo = 16 * sizeMultiplierNo;
+            noBtn.style.fontSize = newSizeNo + 'px';
+            noBtn.style.padding = (15 * sizeMultiplierNo) + 'px ' + (30 * sizeMultiplierNo) + 'px';
+
+            // Si el botón "No" es muy pequeño, lo oculta
+            if (newSizeNo < 2) {
+                noBtn.style.opacity = '0';
+                noBtn.style.pointerEvents = 'none';
+            }
+
+            // Cambia la posición del botón "No" aleatoriamente
+            reposicionarBotonNo();
+        });
+
+        function reposicionarBotonNo() {
+              const maxX = window.innerWidth - noBtn.offsetWidth;
+              const maxY = window.innerHeight - noBtn.offsetHeight;
+
+              const randomX = Math.random() * maxX;
+              const randomY = Math.random() * maxY;
+
+              noBtn.style.left = randomX + 'px';
+              noBtn.style.top = randomY + 'px';
+        }
+
+        siBtn.addEventListener('click', function() {
+            // Oculta los elementos originales
+            contenedor.style.display = 'none';
+
+            // Muestra el mensaje final
+            mensajeFinal.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
